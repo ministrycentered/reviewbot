@@ -2,7 +2,8 @@
 
 ![Example Slack Message](https://raw.github.com/danielma/reviewbot/master/docs/images/slack-example.png)
 
-Our team wants to be reminded via Slack about pending pull requests so we can have timely reviews and keep code moving through to production. There are two approaches with this bot: 
+## bogus change
+Our team wants to be reminded via Slack about pending pull requests so we can have timely reviews and keep code moving through to production. There are two approaches with this bot:
 
 1. Set the bot to run at specific times (say, 10am and 3pm every day) and notify of all open Pull Requests.
 1. Set the bot to run in intervals (say, every hour), only alerting the channels when a PR has been sitting idle for a certain number of person-hours. This means the bot is noiser during hours when everyone is working, and quiets down as people end their day.
@@ -30,7 +31,7 @@ Our team wants to be reminded via Slack about pending pull requests so we can ha
 cp sample-config.json config.json
 ```
 
-Edit `config.json` to match the needs of your team. Each key in the configuration defines a repo, the channel messages for the repo should be posted to, the reviewers responsible for that repo, and the period of inactivity to notify reviewers after. 
+Edit `config.json` to match the needs of your team. Each key in the configuration defines a repo, the channel messages for the repo should be posted to, the reviewers responsible for that repo, and the period of inactivity to notify reviewers after.
 
 The `reviewers` key is a JSON array containing a github username, slack username, and timezone identifier for each reviewer.
 
