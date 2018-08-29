@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.bamboohr.com/api/gateway.php/pco/v1/time_off/requests?end=2018-08-29&start=2018-08-29&status=approved
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v0.12.2
+      Authorization:
+      - Basic MTE4YWEyZWQ4MDRmNGY0MjQzY2JmZDMzZmZiNWU4ZjdkY2VjOGRlMTog
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache
+      Date:
+      - Wed, 29 Aug 2018 17:40:23 GMT
+      Strict-Transport-Security:
+      - max-age=604800; includeSubdomains;
+      Vary:
+      - Authorization,User-Agent
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '[{"id":"1862","employeeId":"40","status":{"lastChanged":"2018-07-19","lastChangedByUserId":"2362","status":"approved"},"name":"Erik
+        Pedersen","start":"2018-08-06","end":"2018-09-07","created":"2018-07-19","type":{"id":"5","name":"Sabbatical","icon":"medal"},"amount":{"unit":"days","amount":"20"},"actions":{"view":true,"edit":false,"cancel":false,"approve":false,"deny":false,"bypass":false},"dates":{"2018-08-06":"1","2018-08-07":"1","2018-08-08":"1","2018-08-09":"1","2018-08-13":"1","2018-08-14":"1","2018-08-15":"1","2018-08-16":"1","2018-08-20":"1","2018-08-21":"1","2018-08-22":"1","2018-08-23":"1","2018-08-27":"1","2018-08-28":"1","2018-08-29":"1","2018-08-30":"1","2018-09-04":"1","2018-09-05":"1","2018-09-06":"1","2018-09-07":"1"},"notes":[]}]'
+    http_version: 
+  recorded_at: Wed, 29 Aug 2018 17:40:23 GMT
+recorded_with: VCR 4.0.0
