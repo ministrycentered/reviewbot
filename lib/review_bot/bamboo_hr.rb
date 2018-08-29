@@ -8,7 +8,7 @@ module ReviewBot
     end
 
     def whos_out(start_date:, end_date: start_date)
-      get('time_off/whos_out', start: start_date.to_s, end: end_date.to_s)
+      get('time_off/requests', start: start_date.to_s, end: end_date.to_s, status: 'approved')
     end
 
     private
