@@ -108,7 +108,8 @@ module ReviewBot
 
     def reviews_from_other_humans
       reviews_from_humans.select do |r|
-        r.user.login != user.login && notify_in_progress_reviewers? ? r.approved? : true
+        r.user.login != user.login &&
+          (notify_in_progress_reviewers? ? r.approved? : true)
       end
     end
 
