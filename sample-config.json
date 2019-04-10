@@ -3,16 +3,19 @@
     "slack_token": "555555",
     "room": "#reviewbot",
     "notify_in_progress_reviewers": true,
+    "notification_template": "{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}",
     "reviewers": [
       {
         "github": "danielma",
         "slack": "dma",
+        "not_user_slack": "not_dma",
         "bamboohr": 1,
         "timezone": "America/Los_Angeles"
       },
       {
         "github": "contributor",
         "slack": "dmas_evil_twin",
+        "not_user_slack": "not_dmas_evil_twin",
         "bamboohr": 2,
         "timezone": "America/New_York"
       }

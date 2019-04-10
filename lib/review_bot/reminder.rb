@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 module ReviewBot
-  GH = Github.new(oauth_token: ENV['GH_AUTH_TOKEN'])
+  GH = Github.new do |config|
+    config.oauth_token = ENV['GH_AUTH_TOKEN']
+    config.connection_options = { headers: {'Accept' => 'application/vnd.github.shadow-cat-preview+json' } }
+  end
 
   class Reminder
     attr_reader :owner, :repo, :app_config
@@ -61,6 +64,8 @@ module ReviewBot
                               .reject { |r| r.github == pull.user.login }
                               .reject { |r| out_reviewers.include? r }
 
+        author = app_reviewers.detect { |r| r.github == pull.user.login } || Reviewer.new('slack' => pull.user.login)
+
         person_hours_since_last_touch = potential_reviewers.map do |reviewer|
           reviewer.work_hours_between(pull.last_touched_at, Time.now.utc)
         end.reduce(0, :+)
@@ -71,11 +76,16 @@ module ReviewBot
           pull.reviewers.include?(reviewer['github'])
         end
 
+        completed_reviewers = potential_reviewers - suggested_reviewers
+
         next if suggested_reviewers.select(&:work_hour?).empty?
 
         Notification.new(
           pull_request: pull,
-          suggested_reviewers: suggested_reviewers
+          suggested_reviewers: suggested_reviewers,
+          completed_reviewers: completed_reviewers,
+          author: author,
+          template: app_config['notification_template']
         )
       end
     end

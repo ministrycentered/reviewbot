@@ -2,7 +2,7 @@
 
 ![Example Slack Message](https://raw.github.com/danielma/reviewbot/master/docs/images/slack-example.png)
 
-Our team wants to be reminded via Slack about pending pull requests so we can have timely reviews and keep code moving through to production. There are two approaches with this bot: 
+Our team wants to be reminded via Slack about pending pull requests so we can have timely reviews and keep code moving through to production. There are two approaches with this bot:
 
 1. Set the bot to run at specific times (say, 10am and 3pm every day) and notify of all open Pull Requests.
 1. Set the bot to run in intervals (say, every hour), only alerting the channels when a PR has been sitting idle for a certain number of person-hours. This means the bot is noiser during hours when everyone is working, and quiets down as people end their day.
@@ -30,7 +30,7 @@ Our team wants to be reminded via Slack about pending pull requests so we can ha
 cp sample-config.json config.json
 ```
 
-Edit `config.json` to match the needs of your team. Each key in the configuration defines a repo, the channel messages for the repo should be posted to, the reviewers responsible for that repo, and the period of inactivity to notify reviewers after. 
+Edit `config.json` to match the needs of your team. Each key in the configuration defines a repo, the channel messages for the repo should be posted to, the reviewers responsible for that repo, and the period of inactivity to notify reviewers after.
 
 The `reviewers` key is a JSON array containing a github username, slack username, and timezone identifier for each reviewer.
 
@@ -45,10 +45,13 @@ There are two main strategies for using the reviewbot. If you want to run it at 
   "danielma/reviewbot": {
     "room": "#reviewbot",
     "bamboohr_subdomain": "mycompany",
+    "notify_in_progress_reviewers": true,
+    "notification_template": "{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}",
     "reviewers": [
       {
         "github": "danielma",
         "slack": "dma",
+        "not_user_slack": "not_dma",
         "bamboohr": 1,
         "timezone": "America/Los_Angeles"
       },
@@ -75,6 +78,22 @@ There are two main strategies for using the reviewbot. If you want to run it at 
 | `bamboohr_subdomain` | The Bamboo HR subdomain for your organization. This is required for any integration with Bamboo HR to work. | No | _(none)_ |
 | `hours_to_review` | How many person-hours reviewbot should wait before sending a reminder about an idle pull request. For more info, look at the [FAQ](#faq) | Yes | _(none)_ |
 | `work_days` | An array of weekdays that the reviewbot should consider work days. `0` is Sunday. | No | `[1,2,3,4,5]` |
+| `notification_template` | This allows you to customize the notification from ReviewBot specifically for your team. This string uses liquid syntax.` | No | `'{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}'`
+| `notify_in_progress_reviewers` Allows each app to decide if a pull request should continue to show up in notification list when it has comments, but not approvals. | false | false
+
+#### Available keys for Notification Template
+| Key | Description
+| --- | ---
+| bullet | Much like a bulleted list, usually at the beginning of your template string
+| pull_request_number | The pull request number - ex: 4545
+| pull_request_html_url | The link to the pull request accessed from the github api
+| pull_request_title | The pull request title
+| needed_review_type | Either 'first review' or 'second review'
+| suggested_emojis | Slack emojis for all suggested reviewers (not the author, not someone who has already reviewed)
+| completed_emojis | Slack emojis for anyone who has already reviewed the pull request. Usually has the face crossed out to denote this person has already reviewed
+| ez_labels | Shows up as a slack emoji `:ez:` if the PR has an EZ or ez label applied
+| plus_ones | Shows up as a slack emoji `:plus_one:` if pull request has one plus_one
+| author_emoji | Shows up as a slack emoji pulled from either the list of reviewers or the github name
 
 ##### Reviewer
 
