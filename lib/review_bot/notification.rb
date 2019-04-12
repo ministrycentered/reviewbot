@@ -25,7 +25,8 @@ module ReviewBot
         'completed_emojis' => completed_emojis,
         'ez_labels' => ez_labels,
         'plus_ones' => plus_ones,
-        'author_emoji' => author_emoji
+        'author_emoji' => author_emoji,
+        'zendesk_labels' => zendesk_labels
       )
     end
 
@@ -53,6 +54,10 @@ module ReviewBot
 
     def author_emoji
       author&.slack_emoji
+    end
+
+    def zendesk_labels
+      pull_request.zendesk? ? ':zendesk:' : ''
     end
 
     def default_message

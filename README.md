@@ -95,6 +95,7 @@ There are two main strategies for using the reviewbot. If you want to run it at 
 | plus_ones | Shows up as a slack emoji `:plus_one:` if pull request has one plus_one
 | author_emoji | Shows up as a slack emoji pulled from either the list of reviewers or the github name
 | sort_asc | Reverses order of displayed notifications
+| zendesk_labels | Shows up as a slack emoji `:zendesk:` if the PR has a Zen Desk label applied
 
 ##### Reviewer
 
