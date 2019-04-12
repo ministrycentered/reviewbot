@@ -57,6 +57,10 @@ module ReviewBot
       labels.include?('ez')
     end
 
+    def zendesk?
+      labels.include?('zen desk')
+    end
+
     private
 
     def approved?
