@@ -16,5 +16,9 @@ module ReviewBot
     def slack_emoji
       ":#{slack}:"
     end
+
+    def not_user_slack_emoji
+      not_user_slack.nil? ? ":not_#{slack}:" : ":#{not_user_slack}:"
+    end
   end
 end

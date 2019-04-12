@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'github_api'
+gem 'liquid'
 gem 'rake'
 gem 'rest-client'
 gem 'timezone'

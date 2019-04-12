@@ -53,6 +53,10 @@ module ReviewBot
         ' )'
     end
 
+    def ez?
+      labels.include?('ez')
+    end
+
     private
 
     def approved?
@@ -63,12 +67,8 @@ module ReviewBot
       end
     end
 
-    def ez?
-      labels.include?('ez')
-    end
-
     def blocked?
-      labels.include?('not ready') || labels.include?('blocked')
+      draft || labels.include?('not ready') || labels.include?('blocked')
     end
 
     def review_in_progress?

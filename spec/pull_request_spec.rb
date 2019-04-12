@@ -37,7 +37,7 @@ describe ReviewBot::PullRequest do
       context 'ignore in progress is false' do
         let(:config) { {'ministrycentered/reviewbot': { 'notify_in_progress_reviewers': false }}.to_json }
 
-        it 'is true' do
+        it 'is false' do
           expect(@pull.needs_review?).to eq false
         end
       end
