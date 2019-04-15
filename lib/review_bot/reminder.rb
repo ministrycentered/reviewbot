@@ -14,11 +14,6 @@ module ReviewBot
       @app_config = app_config
     end
 
-    def message
-      return if notifications.empty?
-      notifications.map(&:message).join("\n")
-    end
-
     def messages
       return if notifications.empty?
       notifications.map(&:message)
