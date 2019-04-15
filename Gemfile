@@ -6,6 +6,7 @@ gem 'liquid'
 gem 'rake'
 gem 'rest-client'
 gem 'timezone'
+gem 'activesupport'
 
 group :development do
   gem 'awesome_print'
