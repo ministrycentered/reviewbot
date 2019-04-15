@@ -19,6 +19,11 @@ module ReviewBot
       notifications.map(&:message).join("\n")
     end
 
+    def messages
+      return if notifications.empty?
+      notifications.map(&:message)
+    end
+
     def app_reviewers
       @app_reviewers ||= app_config['reviewers'].map { |r| Reviewer.new(r) }
     end

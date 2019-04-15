@@ -22,27 +22,29 @@ task :remind, [:mode] do |_t, args|
 
     ReviewBot::HourOfDay.work_days = app_config['work_days']
 
-    message = ReviewBot::Reminder.new(owner, repo, app_config).message
+    messages = ReviewBot::Reminder.new(owner, repo, app_config).messages
+    messages.each do |message|
 
-    puts
-
-    next if message.nil?
-
-    if dry_run
-      puts "Would deliver message to #{room}"
-      puts message
       puts
-    else
-      puts "Delivering a message to #{room}"
 
-      RestClient.post(
-        'https://slack.com/api/chat.postMessage',
-        token: SLACK_TOKEN,
-        channel: room,
-        text: message,
-        icon_emoji: SLACK_BOT_ICON,
-        username: SLACK_BOT_NAME
-      )
+      next if message.nil?
+
+      if dry_run
+        puts "Would deliver message to #{room}"
+        puts message
+        puts
+      else
+        puts "Delivering a message to #{room}"
+
+        RestClient.post(
+          'https://slack.com/api/chat.postMessage',
+          token: SLACK_TOKEN,
+          channel: room,
+          text: message,
+          icon_emoji: SLACK_BOT_ICON,
+          username: SLACK_BOT_NAME
+        )
+      end
     end
   end
 end
