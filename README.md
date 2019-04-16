@@ -38,7 +38,13 @@ There is optional support for bambooHR to determine who is out on any given day,
 
 ##### Example Config
 
-There are two main strategies for using the reviewbot. If you want to run it at specific times and get notified about _all_ open pull requests, set `hours_to_review` to `0`. If you want to run the bot throughout the day and get notified about idle pull requests, set `hours_to_review` to a non-zero value.
+There are two main strategies for using the reviewbot.
+
+The first works like this: Reviewbot expects the rake task to be run hourly. Then you configure your team's desired time_zone and notification hours. Make sure to set `hours_to_review` to `0`.
+Your notification hours should be set on a 24 hour clock and passed in as an array. For example if you want it to run at 10 am and 3 pm: `"notification_hours": [10, 15]`. Make sure to set your
+team's desired time zone or this will run on UTC and your run hours may not be what you expect.
+
+If you want to run the bot throughout the day and get notified about idle pull requests, set `hours_to_review` to a non-zero value.
 
 ```json
 {
@@ -78,9 +84,11 @@ There are two main strategies for using the reviewbot. If you want to run it at 
 | `bamboohr_subdomain` | The Bamboo HR subdomain for your organization. This is required for any integration with Bamboo HR to work. | No | _(none)_ |
 | `hours_to_review` | How many person-hours reviewbot should wait before sending a reminder about an idle pull request. For more info, look at the [FAQ](#faq) | Yes | _(none)_ |
 | `work_days` | An array of weekdays that the reviewbot should consider work days. `0` is Sunday. | No | `[1,2,3,4,5]` |
-| `notification_template` | This allows you to customize the notification from ReviewBot specifically for your team. This string uses liquid syntax.` | No | `'{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}'`
-| `notify_in_progress_reviewers` Allows each app to decide if a pull request should continue to show up in notification list when it has comments, but not approvals. | false | false
-| sort_asc | Reverses order of displayed notifications | No | false
+| `notification_template` | This allows you to customize the notification from ReviewBot specifically for your team. This string uses liquid syntax.` | No | `'{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}'` |
+| `notify_in_progress_reviewers` | Allows each app to decide if a pull request should continue to show up in notification list when it has comments, but not approvals. | No | _(none)_ |
+| sort_asc | Reverses order of displayed notifications | No | _(none)_ |
+| notification_hours | Allows each app to designate what time they want notifications to run. | No | _(none)_ |
+| notification_time_zone | Specify a time zone to base notification_hours on | No | UTC |
 
 #### Available keys for Notification Template
 | Key | Description

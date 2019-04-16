@@ -3,9 +3,13 @@ require 'spec_helper'
 describe ReviewBot::BambooHR do
   let(:subject) { ReviewBot::BambooHR.new( api_key: '55555', subdomain: 'pco' ) }
 
+  around do |example|
+    Timecop.freeze(2018, 8, 29, &example)
+  end
+
   before do
     VCR.use_cassette(:bamboo_requests) do
-     @reviews = subject.whos_out(start_date: Date.today)
+      @reviews = subject.whos_out(start_date: Date.today)
     end
   end
 

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe ReviewBot::Notification do
+  around do |example|
+    Timecop.freeze(2018, 8, 29, &example)
+  end
+
   before do
     JSON.parse(config).each do |app, app_config|
       @owner, @repo = app.split('/')
@@ -11,6 +15,12 @@ describe ReviewBot::Notification do
 
     allow_any_instance_of(Github::Client::PullRequests).to receive(:list).and_wrap_original do |m, *args|
       VCR.use_cassette('pull_requests') do
+        m.call(*args)
+      end
+    end
+
+    allow_any_instance_of(Github::Client::Issues).to receive(:get).and_wrap_original do |m, *args|
+      VCR.use_cassette('issues') do
         m.call(*args)
       end
     end

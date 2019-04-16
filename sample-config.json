@@ -2,6 +2,8 @@
   "ministrycentered/reviewbot": {
     "slack_token": "555555",
     "room": "#reviewbot",
+    "notification_hours": [5, 13],
+    "notification_time_zone": "America/Los_Angeles",
     "notify_in_progress_reviewers": true,
     "notification_template": "{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}",
     "reviewers": [

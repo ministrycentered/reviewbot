@@ -17,6 +17,8 @@ require 'pry'
 require './lib/review_bot.rb'
 require 'webmock/rspec'
 require 'vcr'
+require 'rake'
+require 'timecop'
 
 Dir[File.dirname(__FILE__) + '/support/*.rb'].each do |file|
   require file
