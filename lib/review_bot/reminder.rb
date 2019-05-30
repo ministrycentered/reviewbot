@@ -32,7 +32,7 @@ module ReviewBot
           whos_out_ids = bamboo_hr
                          .whos_out(start_date: Date.today)
                          .map { |t| t['employeeId'] }
-          app_reviewers.select { |r| whos_out_ids.include? r.bamboohr }
+          app_reviewers.select { |r| whos_out_ids.include? r.bamboohr.to_s }
         end
     end
 
