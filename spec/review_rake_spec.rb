@@ -36,7 +36,7 @@ describe 'rake remind' do
       allow_any_instance_of(ReviewBot::Reminder).to receive(:messages).and_return []
       allow(RestClient).to receive(:post).and_return true
 
-      expect(ReviewBot::HourOfDay).to receive(:work_days=).once
+      expect(ReviewBot::HourOfDay).to receive(:work_days=).twice
       Rake::Task['remind'].invoke
     end
   end
