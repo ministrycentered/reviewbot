@@ -70,7 +70,6 @@ describe ReviewBot::Notification do
     let(:template) { '{{bullet}} #{{pull_request_number}} needs a *{{needed_review_type}}* from {{suggested_emojis}}' }
 
     it 'returns a message' do
-      binding.pry
       expect(subject.message).to eq "• #1 needs a *first review* from :dma:"
     end
 

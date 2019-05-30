@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/ministrycentered/reviewbot/pulls
+    uri: https://api.github.com/repos/ministrycentered/reviewbot/pulls?access_token=<TOKEN>
     body:
       encoding: US-ASCII
       string: ''
