@@ -46,7 +46,7 @@ describe ReviewBot::Reminder do
         VCR.use_cassette('issues') do
           m.call(*args)
         end
-      end    
+      end
 
       allow_any_instance_of(ReviewBot::PullRequest).to receive(:labels).and_return([])
       allow_any_instance_of(ReviewBot::PullRequest).to receive(:reviews).and_return([])
@@ -59,7 +59,7 @@ describe ReviewBot::Reminder do
       {'ministrycentered/reviewbot': {
         'notification_hours': [5, 13],
         'room': 'reviewbot',
-        'ignore_work_hours': false,
+        'ignore_work_hours': ignore_work_hours,
         'hours_to_review': 0,
         'notify_in_progress_reviewers': false,
         'reviewers': [
@@ -82,12 +82,24 @@ describe ReviewBot::Reminder do
     end
 
     context 'ignore_work_hours' do
-      it 'gives me sanity' do
-        expect(STDOUT).to receive <~~MESSAGE
-          Delivering a message to reviewbot
-        MESSAGE
+      context 'when ignore_work_hours is true' do
+        let(:ignore_work_hours) { true }
 
-        Rake::Task['remind'].invoke
+        it 'sends notifications' do
+          expect(ReviewBot::Notification).to receive(:new).exactly(3).times
+
+          Rake::Task['remind'].invoke
+        end
+      end
+
+      context 'when ignore_work_hours is false' do
+        let(:ignore_work_hours) { false }
+
+        it 'does not send notifications' do
+          expect(ReviewBot::Notification).to_not receive(:new)
+
+          Rake::Task['remind'].invoke
+        end
       end
     end
   end
