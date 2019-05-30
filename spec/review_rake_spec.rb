@@ -33,10 +33,10 @@ describe 'rake remind' do
     end
 
     it 'only runs for the app with the matching hour' do
-      allow_any_instance_of(ReviewBot::Reminder).to receive(:message).and_return ""
+      allow_any_instance_of(ReviewBot::Reminder).to receive(:messages).and_return []
       allow(RestClient).to receive(:post).and_return true
 
-      expect(ReviewBot::HourOfDay).to receive(:work_days=).twice
+      expect(ReviewBot::HourOfDay).to receive(:work_days=).once
       Rake::Task['remind'].invoke
     end
   end
