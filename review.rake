@@ -2,12 +2,17 @@
 require 'json'
 require 'active_support/time'
 
-CONFIG = JSON.parse(ENV['CONFIG'])
 SLACK_TOKEN    = ENV['SLACK_TOKEN']
 SLACK_BOT_NAME = 'reviewbot'
 SLACK_BOT_ICON = ':robot_face:'
 
 require_relative 'lib/review_bot'
+
+class ReviewConfig
+  def self.env_config
+    JSON.parse(ENV['CONFIG'])
+  end
+end
 
 desc 'Send reminders to team members to review PRs'
 task :remind, [:mode] do |_t, args|
@@ -15,7 +20,7 @@ task :remind, [:mode] do |_t, args|
 
   puts "-- DRY RUN --\n\n" if dry_run
 
-  CONFIG.each do |app, app_config|
+  ReviewConfig.env_config.each do |app, app_config|
     if app_config['hours_to_review'].to_i == 0
       config_hours = app_config['notification_hours']
       raise 'notification hours required' if config_hours.nil?

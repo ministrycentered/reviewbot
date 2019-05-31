@@ -25,16 +25,7 @@ describe ReviewBot::Reminder do
     end
 
     before do
-      ENV['CONFIG'] = config
-      Rake.application.init
-      Rake.application.load_rakefile
-
-      JSON.parse(config).each do |app, app_config|
-        @owner, @repo = app.split('/')
-        @app_config = app_config
-      end
-
-      GH = Github.new(oauth_token: ENV['GH_AUTH_TOKEN'])
+      allow(ReviewConfig).to receive(:env_config).and_return(JSON.parse(config))
 
       allow_any_instance_of(Github::Client::PullRequests).to receive(:list).and_wrap_original do |m, *args|
         VCR.use_cassette('pull_requests') do
