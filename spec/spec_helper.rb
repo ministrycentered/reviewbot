@@ -13,6 +13,9 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'dotenv'
+Dotenv.load('.env')
+
 require 'pry'
 require './lib/review_bot.rb'
 require 'webmock/rspec'
@@ -23,10 +26,16 @@ require 'timecop'
 Dir[File.dirname(__FILE__) + '/support/*.rb'].each do |file|
   require file
 end
-require 'dotenv'
-Dotenv.load('.env')
 
 RSpec.configure do |config|
+  config.before :suite do
+    Rake.application.init
+    Rake.application.load_rakefile
+  end
+
+  config.before :each do
+    Rake::Task['remind'].reenable
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -49,6 +58,12 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
+
+  # Run specs in random order to surface order dependencies. If you find an
+  # order dependency and want to debug it, you can fix the order by providing
+  # the seed, which is printed after each run.
+  #     --seed 1234
+  # config.order = :random
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards
@@ -97,12 +112,6 @@ RSpec.configure do |config|
   # end of the spec run, to help surface which specs are running
   # particularly slow.
   config.profile_examples = 10
-
-  # Run specs in random order to surface order dependencies. If you find an
-  # order dependency and want to debug it, you can fix the order by providing
-  # the seed, which is printed after each run.
-  #     --seed 1234
-  config.order = :random
 
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
