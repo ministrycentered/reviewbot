@@ -6,13 +6,7 @@ describe 'rake remind' do
   end
 
   before do
-    ENV['CONFIG'] = config.to_json
-    Rake.application.init
-    Rake.application.load_rakefile
-  end
-
-  after do
-    ENV['CONFIG'] = nil
+    allow(ReviewConfig).to receive(:env_config).and_return(JSON.parse(config))
   end
 
   context 'when one app should run and the other should not' do
@@ -29,14 +23,14 @@ describe 'rake remind' do
         'ministrycentered/hours_to_review': {
           'hours_to_review': 3
         }
-      }
+      }.to_json
     end
 
     it 'only runs for the app with the matching hour' do
-      allow_any_instance_of(ReviewBot::Reminder).to receive(:message).and_return ""
+      allow_any_instance_of(ReviewBot::Reminder).to receive(:messages).and_return []
       allow(RestClient).to receive(:post).and_return true
 
-      expect(ReviewBot::HourOfDay).to receive(:work_days=).twice
+      expect(ReviewBot::HourOfDay).to receive(:work_days=).twice.and_call_original
       Rake::Task['remind'].invoke
     end
   end
