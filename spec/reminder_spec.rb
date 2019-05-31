@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe ReviewBot::Reminder do
-  context 'sanity' do
+  context 'reminders' do
     before do
       JSON.parse(ENV['CONFIG']).each do |app, app_config|
         owner, repo = app.split('/')
-
-        puts "#{owner}/#{repo}"
 
         ReviewBot::HourOfDay.work_days = app_config['work_days']
 
@@ -19,7 +17,7 @@ describe ReviewBot::Reminder do
     end
   end
 
-  describe '#messages' do
+  describe '#notifications' do
     around do |example|
       Timecop.freeze(2018, 8, 29, 5, &example)
     end
