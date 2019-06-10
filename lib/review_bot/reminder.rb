@@ -15,7 +15,7 @@ module ReviewBot
     end
 
     def messages
-      return if notifications.empty?
+      return [] if notifications.empty?
       notifications.map(&:message)
     end
 
@@ -83,7 +83,8 @@ module ReviewBot
 
         completed_reviewers = potential_reviewers - suggested_reviewers
 
-        next if suggested_reviewers.select(&:work_hour?).empty?
+        care_about_work_hours = !app_config['ignore_work_hours']
+        next if care_about_work_hours && suggested_reviewers.select(&:work_hour?).empty?
 
         Notification.new(
           pull_request: pull,

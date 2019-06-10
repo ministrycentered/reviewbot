@@ -51,6 +51,7 @@ If you want to run the bot throughout the day and get notified about idle pull r
   "danielma/reviewbot": {
     "room": "#reviewbot",
     "bamboohr_subdomain": "mycompany",
+    "ignore_work_hours": true,
     "notify_in_progress_reviewers": true,
     "notification_template": "{{bullet}} #{{pull_request_number}} <{{pull_request_html_url}}|{{pull_request_title}}> needs a *{{needed_review_type}}* from {{suggested_emojis}}",
     "reviewers": [
@@ -89,6 +90,7 @@ If you want to run the bot throughout the day and get notified about idle pull r
 | sort_asc | Reverses order of displayed notifications | No | _(none)_ |
 | notification_hours | Allows each app to designate what time they want notifications to run. | No | _(none)_ |
 | notification_time_zone | Specify a time zone to base notification_hours on | No | UTC |
+| ignore_work_hours | post at any time without regard to the hard coded work hours | No | false
 
 #### Available keys for Notification Template
 | Key | Description
