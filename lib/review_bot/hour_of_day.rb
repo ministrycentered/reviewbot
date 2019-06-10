@@ -39,6 +39,10 @@ module ReviewBot
       self.class.work_days.include?(rounded_time.wday) && WORK_DAY_HOURS.include?(rounded_time.hour)
     end
 
+    def work_day?
+      self.class.work_days.include?(rounded_time.wday)
+    end
+
     def inspect
       "HourOfDay(#{rounded_time.strftime('%a-%I%P')} work_hour: #{work_hour?})"
     end

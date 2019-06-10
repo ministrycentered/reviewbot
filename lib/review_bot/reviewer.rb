@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 module ReviewBot
   class Reviewer < OpenStruct
+    attr_reader :hour_of_day
+
+    def initialize(r)
+      super
+      @hour_of_day = HourOfDay.new(timezone.utc_to_local(Time.now.utc))
+    end
+
     def work_hours_between(start_time, end_time)
       HourOfDay.work_hours_between(start_time, end_time, timezone)
     end
@@ -10,7 +17,11 @@ module ReviewBot
     end
 
     def work_hour?
-      HourOfDay.new(timezone.utc_to_local(Time.now.utc)).work_hour?
+      hour_of_day.work_hour?
+    end
+
+    def work_day?
+      hour_of_day.work_day?
     end
 
     def slack_emoji
