@@ -85,6 +85,7 @@ module ReviewBot
 
         care_about_work_hours = !app_config['ignore_work_hours']
         next if care_about_work_hours && suggested_reviewers.select(&:work_hour?).empty?
+        next if suggested_reviewers.select(&:work_day?).empty?
 
         Notification.new(
           pull_request: pull,
